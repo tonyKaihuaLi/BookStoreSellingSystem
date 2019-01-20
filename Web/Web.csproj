@@ -1104,8 +1104,10 @@
     <Content Include="Images\集团网站.jpg" />
     <Content Include="Images\集团网站1.jpg" />
     <Content Include="Images\页面不存在.jpg" />
+    <Content Include="ImageUpload.aspx" />
     <Content Include="js\jquery-1.7.1.js" />
     <Content Include="js\jquery-ui-1.8.2.custom.min.js" />
+    <Content Include="js\jquery.imgareaselect.min.js" />
     <Content Include="Member\BookList.aspx" />
     <Content Include="Member\CutPhoto.aspx" />
     <Content Include="Member\FindPwd.aspx" />
@@ -1115,7 +1117,15 @@
     <Content Include="ShoppingCart.aspx" />
     <Content Include="ShowMsg.aspx" />
     <Content Include="SWFUpload\handlers.js" />
+    <Content Include="SWFUpload\images\error.gif" />
+    <Content Include="SWFUpload\images\page_white_add.png" />
+    <Content Include="SWFUpload\images\toobig.gif" />
+    <Content Include="SWFUpload\images\uploadlimit.gif" />
+    <Content Include="SWFUpload\images\XPButtonNoText_160x22.png" />
+    <Content Include="SWFUpload\images\zerobyte.gif" />
     <Content Include="SWFUpload\swfupload.js" />
+    <Content Include="SWFUpload\swfupload.swf" />
+    <Content Include="SWFUpload\swfupload_fp9.swf" />
     <Content Include="Template\BookTemplate.html" />
     <Content Include="Web.config" />
   </ItemGroup>
@@ -1155,6 +1165,13 @@
     <Compile Include="Enum\UserStateEnum.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="ImageUpload.aspx.cs">
+      <DependentUpon>ImageUpload.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ImageUpload.aspx.designer.cs">
+      <DependentUpon>ImageUpload.aspx</DependentUpon>
     </Compile>
     <Compile Include="Master\MainMaster.Master.cs">
       <DependentUpon>MainMaster.Master</DependentUpon>
