@@ -49,7 +49,7 @@ namespace Web.ashx
             bookComment.BookId = Convert.ToInt32(context.Request["bookId"]);
             bookComment.Msg = context.Request["msg"];
             bookComment.CreateDateTime = DateTime.Now;
-            BLL.BookCommentManager bookCommentManager = new BookCommentManager();
+            BookCommentManager bookCommentManager = new BookCommentManager();
             if (bookCommentManager.Add(bookComment) > 0)
             {
                 context.Response.Write("OK");
