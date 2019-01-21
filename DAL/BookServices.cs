@@ -262,7 +262,6 @@ namespace DAL
             return DbHelperSQL.Query(strSql.ToString());
         }
 
-        //___----------------------------------------------
         public int GetRecordCount()
         {
             string sql = "select count(*) from Books";

@@ -8,6 +8,7 @@
     <title></title>
     <%--<link href="../Css/themes/ui-lightness/jquery-ui-1.8.2.custom.css" rel="stylesheet" />--%>
        <script src="../js/jquery-1.7.1.js"></script>
+    <script src="../js/jquery.imgareaselect.min.js"></script>
     <%--<script src="../js/jquery-ui-1.8.2.custom.min.js"></script>--%>
     <script src="../SWFUpload/swfupload.js"></script>
     <script src="../SWFUpload/handlers.js"></script>
@@ -70,7 +71,7 @@
             //$("#hiddenImageUrl").val(data[0]);//将上传成功的图片路径存储到隐藏域中。
             //$("#divContent").css("backgroundImage", "url('" + data[0] + "')").css("width",data[1]+"px").css("height",data[2]+"px");
             $("#selectbanner").attr("src", data[0]);
-            $('#selectbanner').imgAreaSelect({
+            $("#selectbanner").imgAreaSelect({
                 selectionColor: 'blue', x1: 0, y1: 0, x2: 100,
                 y2: 100,selectionOpacity: 0.2, onSelectEnd: preview
             });

@@ -177,8 +177,7 @@ namespace BLL
         {
             return GetList("");
         }
-
-        //-----------------------------------
+        
         /// <summary>
         /// 获取总页数
         /// </summary>
@@ -211,7 +210,7 @@ namespace BLL
             string fileContent = File.ReadAllText(template);
             fileContent = fileContent.Replace("$title", model.Author).Replace("$author", model.Author)
                 .Replace("$unitprice", model.UnitPrice.ToString("0.00")).Replace("$isbn", model.ISBN)
-                .Replace("$content", model.ContentDescription).Replace("b$bookId", model.Id.ToString());
+                .Replace("$content", model.ContentDescription).Replace("$bookId", model.Id.ToString());
             string dir = "/HtmlPage/" + model.PublishDate.Year + "/" + model.PublishDate.Month + "/" +
                          model.PublishDate.Day + "/";
             Directory.CreateDirectory(Path.GetDirectoryName(HttpContext.Current.Request.MapPath(dir)));

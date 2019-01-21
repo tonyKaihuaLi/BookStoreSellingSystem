@@ -18,8 +18,8 @@
                     </TD>
                     <TD style="FONT-SIZE: small; COLOR: red" width=650><A 
                         class=booktitle id=link_prd_name 
-                        href="<%#Eval("Id","/BookDetail_{0}.aspx") %>" target=_blank 
-                        name=link_prd_name><%#Eval("Title") %></A> 
+                        href="<%#GetString(Eval("PublishDate")) %><%#Eval("Id") %>.html" target=_blank 
+                        name="link_prd_name"><%#Eval("Title") %></A> 
                     </TD></TR>
                 <TR>
                     <TD align=left><SPAN 

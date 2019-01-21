@@ -16,26 +16,18 @@ namespace Web.ashx
         public void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
-            HttpPostedFile file = context.Request.Files["FileData"];
-            if (file != null)
+            string action = context.Request["action"];
+            if (action == "upload")//上传图片
             {
-                string fileName = Path.GetFileName(file.FileName);
-                string fileExt = Path.GetExtension(fileName);
-                if (fileExt == ".jpg")
-                {
-                    string dir = "/ImageUpload/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/" +
-                                 DateTime.Now.Day + "/";
-                    if (!Directory.Exists(context.Request.MapPath(dir)))
-                    {
-                        Directory.CreateDirectory(context.Request.MapPath(dir));
-                    }
-
-                    string newFileName = Guid.NewGuid().ToString();
-                    string fullDir = dir + fileName + fileExt;
-                    file.SaveAs(context.Request.MapPath(fullDir));
-                    context.Response.Write(fullDir);
-                    //file.SaveAs(context.Request.MapPath("/ImageUpload/"+fileName));
-                }
+                ProcessFileUpload(context);
+            }
+            else if (action == "cut")//截取图片
+            {
+                ProcessCutPhoto(context);
+            }
+            else
+            {
+                context.Response.Write("参数错误!!");
             }
         }
 
@@ -58,6 +50,34 @@ namespace Web.ashx
                         map.Save(context.Request.MapPath(fullDir),System.Drawing.Imaging.ImageFormat.Jpeg);
                         context.Response.Write(fullDir);
                     }
+                }
+            }
+        }
+
+        private void ProcessFileUpload(HttpContext context)
+        {
+            HttpPostedFile file = context.Request.Files["Filedata"];
+            if (file != null)
+            {
+                string fileName = Path.GetFileName(file.FileName);
+                string fileExt = Path.GetExtension(fileName);
+                if (fileExt == ".jpg")
+                {
+                    string dir = "/ImageUpload/" + DateTime.Now.Year + "/" + DateTime.Now.Month + "/" + DateTime.Now.Day + "/";
+                    if (!Directory.Exists(context.Request.MapPath(dir)))
+                    {
+                        Directory.CreateDirectory(context.Request.MapPath(dir));
+                    }
+                    string newfileName = Guid.NewGuid().ToString();
+                    string fullDir = dir + newfileName + fileExt;
+                    file.SaveAs(context.Request.MapPath(fullDir));
+                    using (Image img = Image.FromFile(context.Request.MapPath(fullDir)))
+                    {
+                        context.Response.Write(fullDir + ":" + img.Width + ":" + img.Height);
+                    }
+
+                    //file.SaveAs(context.Request.MapPath("/ImageUpload/"+fileName));
+                    //context.Response.Write("/ImageUpload/" + fileName);
                 }
             }
         }

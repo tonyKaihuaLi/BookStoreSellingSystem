@@ -44,7 +44,7 @@ namespace Web.Member
         public string GetString(object obj)
         {
             DateTime time = Convert.ToDateTime(obj);
-            return "/";
+            return "/HtmlPage/"+time.Year+"/"+time.Month+"/"+time.Day+"/";
         }
 
         protected void BookListRepeater_ItemCommand(object source, RepeaterCommandEventArgs e)

@@ -1,9 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/MainMaster.Master" AutoEventWireup="true" CodeBehind="ImageUpload.aspx.cs" Inherits="Web.ImageUpload" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Header" runat="server">
+    <link href="Css/imgareaselect-default.css" rel="stylesheet" />
     <script src="js/jquery-1.7.1.js"></script>
+    <script src="js/jquery.imgareaselect.min.js"></script>
+
     <script src="SWFUpload/handlers.js"></script>
     <script src="SWFUpload/swfupload.js"></script>
-    <script src="js/jquery.imgareaselect.min.js"></script>
     <script type="text/javascript">
         var swfu;
         window.onload = function () {
@@ -81,21 +83,14 @@
         }
 
         $(function () {
-            //让DIV可以移动与拖动大小
-            //$("#divCut").draggable({ containment: "#divContent", scroll: false }).resizable({
-            //    containment: "#divContent"
-            //});
+
             $("#btnCut").click(function () {
                 cutPhoto();
             });
         })
         //截取头像
         function cutPhoto() {
-            //计算要截取的头像的范围。
-            //var y = $("#divCut").offset().top - $("#divContent").offset().top;//纵坐标
-            //var x = $("#divCut").offset().left - $("#divContent").offset().left;
-            //var width = $("#divCut").width();
-            //var heigth = $("#divCut").height();
+
             var pars = {
                 "x": $('#selectbanner').data('x'),
 
@@ -129,11 +124,13 @@
                 <div id="divFileProgressContainer" style="height: 75px;"></div>
                 
                 <div id="thumbnails"></div>
+
                 <input type="button" value="截取图片" id="btnCut" />
+                <img id="showPhoto"/>
                 <input type="hidden" id="hiddenImageUrl" />
 	        
                 <img id="selectbanner"/>
-                <img id="showPhoto"/>
+                
             </div>
 
 
