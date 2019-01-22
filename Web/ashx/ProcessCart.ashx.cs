@@ -18,7 +18,7 @@ namespace Web.ashx
             context.Response.ContentType = "text/plain";
             //context.Response.Write("Hello World");
             UserManager userManager=new UserManager();
-            if (userManager.validateUserLogin())
+            if (userManager.ValidateUserLogin())
             {
                 int bookId = Convert.ToInt32((context.Request["bookId"]));
                 BookManager bookManager= new BookManager();
@@ -44,19 +44,18 @@ namespace Web.ashx
                         cartManager.Add(modelCart);
                     }
 
-                    context.Response.Write("Success");
+                    context.Response.Write("ok: Success");
 
                 }
                 else
                 {
-                    context.Response.Write("No Such Stuff");
+                    context.Response.Write("no: No Such Stuff");
                 }
 
-                context.Response.Write("Success");
             }
             else
             {
-                context.Response.Write("Please Login");
+                context.Response.Write("login: Please Login");
             }
 
         }

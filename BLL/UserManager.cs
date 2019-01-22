@@ -173,56 +173,6 @@ namespace BLL
 
         #endregion  成员方法
 
-        public void FindUserPwd(Model.User userInfo)
-        {
-            BLL.SettingsManager settingsManager=new SettingsManager();
-
-            string newPwd = Guid.NewGuid().ToString().Substring(0, 8);
-            userInfo.LoginPwd = newPwd;
-            dal.Update(userInfo);
-            MailMessage mailMessage = new MailMessage();
-            mailMessage.From= new MailAddress(settingsManager.GetValue("系统邮件SMTP"));
-            mailMessage.To.Add(new MailAddress(userInfo.Mail));
-            mailMessage.Subject = "Forget Password";
-            StringBuilder stringBuilder=new StringBuilder();
-            stringBuilder.Append("UserName is " + userInfo.LoginId);
-            stringBuilder.Append("Your new password is: " + newPwd);
-            mailMessage.Body = stringBuilder.ToString();
-            SmtpClient client= new SmtpClient("smtp.126.com");
-            client.Credentials=new NetworkCredential(settingsManager.GetValue("系统邮件用户名"), settingsManager.GetValue("系统邮件密码"));
-            client.Send(mailMessage);
-        }
-
-        public bool validateUserLogin()
-        {
-            var current = HttpContext.Current;
-            if (current.Session["userInfo"] != null)
-            {
-                return true;
-            }
-            else
-            {
-                if (current.Request.Cookies["cp1"] != null && current.Request.Cookies["cp2"] != null)
-                {
-                    string userName = current.Request.Cookies["cp1"].Value;
-                    string userPwd = current.Request.Cookies["cp2"].Value;
-                    User userInfo = GetModel(userName);
-                    if (userInfo != null)
-                    {
-                        if (userPwd == Common.WebCommon.GetMd5String(userInfo.LoginPwd))
-                        {
-                            current.Session["userInfo"] = userInfo;
-                            return true;
-                        }
-                    }
-
-                    current.Response.Cookies["cp1"].Expires = DateTime.Now.AddDays(-1);
-                    current.Response.Cookies["cp2"].Expires = DateTime.Now.AddDays(-1);
-                    return false;
-                }
-
-                return false;
-            }
-        }
+        
     }
 }

@@ -1,10 +1,12 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/MainMaster.Master" AutoEventWireup="true" CodeBehind="ShoppingCart.aspx.cs" Inherits="Web.ShoppingCart" %>
 <%@ Import Namespace="Model" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Header" runat="server">
+    <link href="Css/themes/ui-lightness/jquery-ui-1.8.2.custom.css" rel="stylesheet" />
+    <script src="js/jquery-ui-1.8.2.custom.min.js"></script>
     <script type="text/javascript">
         $(function() {
             getTotalPrice();
-        })
+        });
         function changeBar(operator, cartId, bookId) {
             var count = $("#txtCount" + bookId).val();
             if (operator == "-") {

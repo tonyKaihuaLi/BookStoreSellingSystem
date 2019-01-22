@@ -6,6 +6,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DBUtility;
 
 namespace DAL
 {
@@ -13,7 +14,9 @@ namespace DAL
     {
         //数据库连接字符串(web.config来配置)，可以动态更改connectionString支持多数据库.		
         public static string connectionString = PubConstant.ConnectionString;
-
+        public DbHelperSQL()
+        {
+        }
 
         #region 公用方法
         /// <summary>

@@ -1892,6 +1892,7 @@
     <Compile Include="ShowMsg.aspx.designer.cs">
       <DependentUpon>ShowMsg.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\BookCommentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Master\MainMaster.Master" />

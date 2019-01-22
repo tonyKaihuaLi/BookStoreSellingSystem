@@ -204,9 +204,9 @@ namespace DAL
             strSql.Append("select  top 1 Id,UserId,BookId,Count from Cart ");
             strSql.Append(" where UserId=@UserId and BookId=@BookId");
             SqlParameter[] parameters = {
-                    new SqlParameter("@UserId", SqlDbType.Int,4),
-                                        new SqlParameter("@BookId", SqlDbType.Int,4)
-                                        };
+                new SqlParameter("@UserId", SqlDbType.Int,4),
+                new SqlParameter("@BookId", SqlDbType.Int,4)
+            };
             parameters[0].Value = userId;
             parameters[1].Value = bookId;
 

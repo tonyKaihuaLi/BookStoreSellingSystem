@@ -14,7 +14,7 @@ namespace Web
         protected void Page_Load(object sender, EventArgs e)
         {
             UserManager userManager = new UserManager();
-            if (userManager.validateUserLogin())
+            if (userManager.ValidateUserLogin())
             {
                 BindCartList();
             }

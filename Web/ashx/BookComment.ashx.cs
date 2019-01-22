@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Script.Serialization;
 using BLL;
+using Web.ViewModel;
 
 namespace Web.ashx
 {
@@ -38,9 +39,19 @@ namespace Web.ashx
             int bookId = Convert.ToInt32(context.Request["bookId"]);
             List<Model.BookComment> list = bookCommentManager.GetModelList("BookId="+bookId);
 
+            List<BookCommentViewModel> newList= new List<BookCommentViewModel>();
+            foreach (Model.BookComment bookComment in list)
+            {
+                ViewModel.BookCommentViewModel viewModel = new BookCommentViewModel();
+                viewModel.Msg = Common.WebCommon.UbbToHtml(bookComment.Msg);
+                TimeSpan timeSpan = DateTime.Now - bookComment.CreateDateTime;
+                viewModel.CreateDateTime = Common.WebCommon.GetTimeSpan(timeSpan);
+                newList.Add(viewModel);
+            }
+
             JavaScriptSerializer js = new JavaScriptSerializer();
 
-            context.Response.Write(js.Serialize(list));
+            context.Response.Write(js.Serialize(newList));
         }
 
         private void AddComment(HttpContext context)
@@ -55,6 +66,7 @@ namespace Web.ashx
                 context.Response.Write("OK");
             }
         }
+
 
         public bool IsReusable
         {
