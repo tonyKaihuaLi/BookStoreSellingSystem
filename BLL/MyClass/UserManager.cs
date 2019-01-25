@@ -85,7 +85,7 @@ namespace BLL
             stringBuilder.Append("UserName is " + userInfo.LoginId);
             stringBuilder.Append("Your new password is: " + newPwd);
             mailMessage.Body = stringBuilder.ToString();
-            SmtpClient client = new SmtpClient("smtp.126.com");
+            SmtpClient client = new SmtpClient(settingsManager.GetValue("系统邮件SMTP"));
             client.Credentials = new NetworkCredential(settingsManager.GetValue("系统邮件用户名"), settingsManager.GetValue("系统邮件密码"));
             client.Send(mailMessage);
         }

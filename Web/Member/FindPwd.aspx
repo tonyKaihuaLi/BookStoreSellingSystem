@@ -1,20 +1,18 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master/MainMaster.Master" AutoEventWireup="true" CodeBehind="FindPwd.aspx.cs" Inherits="Web.Member.FindPwd" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="Header" runat="server">
     <script type="text/javascript">
-        $function()
-        {
-            $("btnFindPwd").click(function() {
+        $(function() {
+            $("#btnFindPwd").click(function() {
                 findPwd();
             });
-            function findPwd() {
-                var userName = $("#txtName").val();
-                var userMail = $("#txtMail").val();
-                if (userName != "" && userMail != "") {
-                    $.post("/ashx/FindPwd.ashx", { "name": userName, "mail": userMail }, function(data) {});
-
-                } else {
-                    alert("Wrong");
-                }
+        });
+        function findPwd() {
+            var userName = $("#txtName").val();
+            var userMail = $("#txtMail").val();
+            if (userName != "" && userMail != "") {
+                $.post("/ashx/FindPwd.ashx", { "name": userName, "mail": userMail }, function(data) {});
+        } else {
+                alert("Wrong");
             }
         }
     </script>

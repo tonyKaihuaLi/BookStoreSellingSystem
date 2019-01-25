@@ -18,7 +18,7 @@ namespace Web.Member
             if (IsPostBack)
             {
                 if (Common.WebCommon.CheckValidateCode(Request["txtCode"]))
-                {
+                { 
                     AddUserInfo();
                 }
             }
@@ -50,5 +50,6 @@ namespace Web.Member
             
         
         }
+
     }
 }

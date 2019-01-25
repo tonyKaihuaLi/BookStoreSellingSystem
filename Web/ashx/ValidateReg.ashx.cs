@@ -53,11 +53,6 @@ namespace Web.ashx
 
         }
 
-        //private void CheckValidateCode(HttpContext context)
-        //{
-        //    //bool isSuccess = false;
-        //    if()
-        //}
 
         public bool IsReusable
         {

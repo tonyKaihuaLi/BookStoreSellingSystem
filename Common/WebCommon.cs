@@ -11,17 +11,7 @@ namespace Common
 {
     public class WebCommon
     {
-        public static void GetFilePath(object obj)
-        {
 
-
-            HttpContext context = (HttpContext)obj;
-            string filePath = context.Request.MapPath("/Images/body.jpg");
-
-            // string filePath = HostingEnvironment.MapPath("/Images/body.jpg");
-            //string filePath=
-            // return "";
-        }
         public static bool CheckValidateCode(string validateCode)
         {
             bool isSuccess = false;

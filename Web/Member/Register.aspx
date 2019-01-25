@@ -27,7 +27,7 @@
             $("#btnRegister").click(function () {//注册
                 if ($("#userMail").val() == "") { $("#msg").text("邮箱不能为空!!"); return false }
                 if ($("#validateCode").val() == "") { $("#validateCodeMsg").text("验证码不能为空!!"); return false }
-                var par = $("#aspnetForm").serializeArray();
+                var par = $("#form1").serializeArray();
                 $.post("/ashx/UserRegister.ashx", par, function (data) {
                     $("#validateCodeMsg").text(data);
                 });
@@ -39,7 +39,7 @@
             if (val != "") {
                 var reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
                 if (reg.test(val)) {
-                    $("#msg").css("display", "none");
+                    n$("#msg").css("display", "none");
                     $.post("/ashx/ValidateReg.ashx", { "action": "mail", "userMail": val }, function (data) {
                         $("#msg").css("display", "block");
                         $("#msg").text(data);

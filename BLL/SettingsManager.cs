@@ -149,8 +149,6 @@ namespace BLL
             {
                 return CacheHelper.Get("setting_" + key).ToString();
             }
-
-
         }
 
 

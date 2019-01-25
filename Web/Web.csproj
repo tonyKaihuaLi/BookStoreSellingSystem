@@ -1807,6 +1807,9 @@
     <Compile Include="ashx\Upload.ashx.cs">
       <DependentUpon>Upload.ashx</DependentUpon>
     </Compile>
+    <Compile Include="ashx\UserRegister.ashx.cs">
+      <DependentUpon>UserRegister.ashx</DependentUpon>
+    </Compile>
     <Compile Include="ashx\ValidateReg.ashx.cs">
       <DependentUpon>ValidateReg.ashx</DependentUpon>
     </Compile>
@@ -1909,6 +1912,7 @@
     <Content Include="ckeditor\_samples\adobeair\run.bat" />
     <Content Include="ckeditor\_samples\adobeair\run.sh" />
     <Content Include="ckeditor\_samples\assets\output_for_flash.fla" />
+    <Content Include="ashx\UserRegister.ashx" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

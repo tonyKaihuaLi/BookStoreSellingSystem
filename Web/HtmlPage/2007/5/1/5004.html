@@ -1,0 +1,242 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+
+    <title>杨树青，王欢　编著</title>
+    <meta content="北京市新华书店王府井书店，致力于提供专业化购书服务.网上购书选择新华书店王府井书店(网上书店),购书放心有保障.王府井书店电话:010-65132842.010-65252592" name="description" />
+    <meta content="王府井书店 新华书店 网上书店 网上购书 北京图书大厦" name="keywords" />
+    <link href="/Css/themes/ui-lightness/jquery-ui-1.8.2.custom.css" rel="stylesheet" />
+    <link href="/Css/tableStyle.css" rel="stylesheet" />
+    <link href="/Css/index.css" rel="stylesheet" />
+    <script src="/js/jquery-1.7.1.js"></script>
+    <script src="/ckeditor/ckeditor.js"></script>
+    <script src="/js/jquery-ui-1.8.2.custom.min.js"></script>
+    <style type="text/css">
+
+        .itcast_comments {
+            width: 620px;
+            color: #333;
+            font: normal 12px/24px Helvetica, Tahoma, Arial, sans-serif;
+            font-size: 14px;
+        }
+
+        .reply_btn {
+            font-size: 14px;
+            background: #cc0000;
+            padding: 8px 15px;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-family: "microsoft yahei";
+            font-weight: bold;
+        }
+
+        .reply_box {
+            border: 1px solid #CCC;
+            font-size: 14px;
+        }
+
+        .buy_now {
+            background: #e92324;
+            color: #969696;
+            font-size: 15px;
+            border: 1px solid #d5d5d5;
+            font-weight: 700;
+            font-family: "microsoft yahei","微软雅黑";
+            padding: 10px 40px;
+            border-radius: 5px;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            $("#btnAdd").click(function () {
+                addComment();
+            });
+            loadComment();//加载评论
+            loadUBBCode();//加载UBB编辑器
+            $("#addCart").click(function () {
+                addProductCart();//商品加入购物车
+            });
+
+        });
+        //将商品放入购物车
+        function addProductCart() {
+            $.post("/ashx/ProcessCart.ashx", { "bookId": 5004 }, function (data) {
+                var serverData = data.split(':');
+                if (serverData[0] == "ok") {
+                    $("#msg").text(serverData[1]);
+                    $("#showResult").css("display", "block");
+                    $("#showResult").dialog({
+                        height: 240,
+                        modal: true,
+                        buttons: {
+                            Ok: function () {
+                                $(this).dialog("close");
+                            }
+                        }
+                    });
+
+                } else if (serverData[0] == "no") {
+                    alert(serverData[1]);
+                } else if (serverData[0] == "login") {//表示没有登录
+                    showLoginDialog();
+                } else {
+                    alert("参数错误!!");
+                    //showLoginDialog();
+                }
+
+            });
+        }
+        //弹出登录窗口
+        function showLoginDialog() {
+            $("#loginDiv").css("display", "block");
+            $("#loginDiv").dialog({
+                height: 240,
+                modal: true,
+                buttons: {
+                    Ok: function () {
+                        $(this).dialog("close");
+                    }
+                }
+            });
+        }
+
+
+        //加载UBB编辑器
+        function loadUBBCode() {
+            CKEDITOR.replace( 'txtContent',
+                {
+                    extraPlugins : 'bbcode',
+                    // Remove unused plugins.
+                    removePlugins : 'bidi,button,dialogadvtab,div,filebrowser,flash,format,forms,horizontalrule,iframe,indent,justify,liststyle,pagebreak,showborders,stylescombo,table,tabletools,templates',
+                    // Width and height are not supported in the BBCode format, so object resizing is disabled.
+                    disableObjectResizing : true,
+                    // Define font sizes in percent values.
+                    fontSize_sizes : "30/30%;50/50%;100/100%;120/120%;150/150%;200/200%;300/300%",
+                    toolbar :
+                    [
+                        ['Source', '-', 'Save','NewPage','-','Undo','Redo'],
+                        ['Find','Replace','-','SelectAll','RemoveFormat'],
+                        ['Link', 'Unlink', 'Image', 'Smiley','SpecialChar'],
+                        '/',
+                        ['Bold', 'Italic','Underline'],
+                        ['FontSize'],
+                        ['TextColor'],
+                        ['NumberedList','BulletedList','-','Blockquote'],
+                        ['Maximize']
+                    ],
+                    // Strip CKEditor smileys to those commonly used in BBCode.
+                    smiley_images :
+                    [
+                        'regular_smile.gif','sad_smile.gif','wink_smile.gif','teeth_smile.gif','tounge_smile.gif',
+                        'embaressed_smile.gif','omg_smile.gif','whatchutalkingabout_smile.gif','angel_smile.gif','shades_smile.gif',
+                        'cry_smile.gif','kiss.gif'
+                    ],
+                    smiley_descriptions :
+                    [
+                        'smiley', 'sad', 'wink', 'laugh', 'cheeky', 'blush', 'surprise',
+                        'indecision', 'angel', 'cool', 'crying', 'kiss'
+                    ]
+                } );
+        }
+
+       //加载评论
+        function loadComment() {
+            $.post("/ashx/BookComment.ashx", { "action": "load", "bookId": 5004 }, function (data) {
+                var serverData = $.parseJSON(data);
+                var serverDataLength = serverData.length;
+                for (var i = 0; i < serverDataLength; i++) {
+                    $("<li>" + serverData[i].CreateDateTime + ":" + serverData[i].Msg + "</li>").appendTo("#commentList");
+                }
+            });
+        }
+        //添加评论
+        function addComment() {
+            //var msg = $("#txtContent").val();
+            var oEditor = CKEDITOR.instances.txtContent;//找到UBB编辑器
+            var msg = oEditor.getData();//获取编辑器内容
+            if (msg != "") {
+                $.post("/ashx/BookComment.ashx", { "action": "add", "msg": msg, "bookId": 5004 }, function (data) {
+                    var serverData = data.split(':');
+                    if (serverData[0] == "ok") {
+                        // $("#txtContent").val("");
+                        oEditor.setData("");
+                        $("#txtContent").focus();
+                        loadComment();
+                        $("#txtMsg").text(serverData[1]);
+                    } else {
+                        $("#txtMsg").text(serverData[1]);
+                    }
+
+                });
+            } else {
+                $("#txtMsg").text("评论内容不能为空!!");
+                $("#txtContent").focus();
+            }
+        }
+    </script>
+</head>
+<body>
+    <center>
+        <div class="top">
+            <div class="m_c" style="width: 736px; height: 27px">
+                <span class="l">
+                    <a href="http://www.beifabook.com" target="_blank">北发图书网主网站</a> |&nbsp;
+                    <a href="http://www.bjbb.com" target="_blank">北京图书大厦</a>&nbsp; |
+                    <a href="../default.aspx" target="_blank"><font color="#00A0E9">王府井书店</font></a>&nbsp;|
+                    <a href="http://www.zgcbb.com/" target="_blank">中关村图书大厦</a>&nbsp; |
+                    <a href="http://www.yycbook.com/" target="_blank">亚运村图书大厦</a>&nbsp; |
+                    <a href="http://www.hs-book.com" target="_blank">花市书店</a>&nbsp; |
+                    <a href="/OrderInfo.aspx">我的订单</a>
+                </span>
+            </div>
+        </div>
+
+
+        <div style="WIDTH: 750px; text-align: left;">
+            <img src="/images/集团网站1.jpg" width="780" height="93" /><br />
+            &nbsp;&nbsp;&nbsp;&nbsp;
+        </div>
+    </center>
+
+    <table>
+        <tr><td>书名</td><td>杨树青，王欢　编著</td></tr>
+        <tr><td>作者</td><td>杨树青，王欢　编著</td></tr>
+        <tr><td>单价</td><td>42.00 &nbsp;&nbsp;<a href="javascript:void(0)" class="buy_now" id="addCart">加入购物车</a> </td></tr>
+        <tr><td>封面</td><td><img src="/Images/BookCovers/9787302151029.jpg" /></td></tr>
+        <tr><td>简介</td><td>本书系统地介绍了在Linux平台下用C语言进行程序开发的过程，通过列举大量的程序实例，使读者很快掌握在Linux平台下进行C程序开发的方法和技巧，并具备开发大型应用程序的能力。<br>本书内容翔实，主要包括：Linux平台下c语言及其编程环境的介绍，C语言编译器、调试工具和自动维护工具的使用方法，进程、文件的相关操作，输入输出操作和内在管理，C语言网络编程方法等。<br>　　本书是作者根据多年来的开发和教学经验并融合大量的编程实例而著成此书。读者通过本书的学习能够快速地学会Linux下C语言编程，掌握其中的方法和编程技巧，并能从一开始就养成良好的编程习惯，以便于读者低起点、高效率地掌握Linux环境下的编程知识。<br>　　本书结构合理、概念清晰、实例丰富，并具有限强的启发性和实用性，适合有一定的C语言基础，需要在Linux系统上编程的程序设计人员阅读，也可作为本、专科学生的教材或参考书，还可供广大计算机爱好者学习C语言使用。</td></tr>
+    </table>
+    <hr />
+    <ul id="commentList" class="itcast_comments"></ul>
+    <textarea id="txtContent" rows="20" cols="100" class="reply_box" placeholder="有什么感想?来说说!!"></textarea><br />
+    <input type="button" value="发布评论" id="btnAdd" class="reply_btn" /><span id="txtMsg" style="font-size:14px;color:red"></span>
+    <div id="footer">
+        <table border="0" width="100%" class="categories1">
+            <tr>
+                <td align="center">
+                    <ul>
+                        <li><a href='#'>关于我们王府井书店</li>
+                        <li><a href="#">书店营业时间：9：30-21：00 </a> </li>
+                        <li> <a href="#" ; target=_blank;><img src="/images/logo123x40.jpg" width="123" height="40" border="0"></a> <a href="#" ; target=_blank;><img border="0" src="/Images/kaixin.jpg"></a> </li>
+                        <li>&nbsp;<span lang="zh-cn"><a title="京ICP备08001692号" href="http://www.miibeian.gov.cn">京ICP备08987373号</a></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </li>
+                    </ul>
+                </td>
+            </tr>
+        </table>
+    </div>
+<div id="loginDiv" style="display: none">
+    <table>
+        <tr><td>用户名:</td><td><input type="text" id="txtName" /></td></tr>
+        <tr><td>密码:</td><td><input type="text" id="txtPwd" /></td></tr> 
+    </table>
+
+
+</div>
+    <div id="showResult" style="display:none">
+        <span id="msg" style="font-size:14px;color:red"></span>访问<a href="/ShoppingCart.aspx">购物车</a>页面，进行支付
+
+    </div>
+
+
+</body>
+</html>
